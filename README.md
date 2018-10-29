@@ -31,7 +31,10 @@ Follow instructions at [potty-word-notification-email-evaluator repo](https://gi
 7. Setup Send Grid Email Relay
 Follow instructions at [notifier repo](https://github.com/doddatpivotal/notifier/blob/master/README.md) to  STMP environment variables
 
-8. Update the redis-chat-app feeder url to your custom domain: k8s/redis-chat-web-kservice.yml
+8. Create configmap providing feeder url with custom domain for redis-chat-app.
+```bash
+kubectl create configmap redis-chat-web-config --from-literal=FEEDER_URL="http://channel-feeder.default.<CUSTOM_DOMAIN>.com"
+```
 
 ## instructions
 
