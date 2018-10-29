@@ -25,6 +25,12 @@ Run scripts from [Knative Eventing docs](https://github.com/knative/docs/tree/ma
 
 Follow Steps 2, 3, 4 from [GCP PubSub Bus](https://github.com/knative/eventing/blob/master/config/buses/gcppubsub/README.md) following steps 2, 3, and 4
 
+6. Setup Email to/from
+Follow instructions at [potty-word-notification-email-evaluator repo](https://github.com/doddatpivotal/potty-word-notification-email-evaluator/blob/master/README.md) to set DOCKER_ID and to/from environment variables
+
+7. Setup Send Grid Email Relay
+Follow instructions at [notifier repo](https://github.com/doddatpivotal/notifier/blob/master/README.md) to  STMP environment variables
+
 ## instructions
 
 1. Clone the setup repo and the two project repos into a single local directory:
@@ -42,17 +48,17 @@ git clone https://github.com/doddatpivotal/redis-chat-app.git
 git clone https://github.com/doddatpivotal/redis-chat-plus-demo-setup.git
 ```
 
-2; From the redis-chat-plus-demo-setup directory, run the setup script:
+2; From the redis-chat-plus-demo directory, run the setup script:
+
+>Tip: You can follow along by splitting terminal verticly and calling `watch riff service list`
 
 ```bash
-cd redis-chat-plus-demo-setup
-
-../channel-feeder/scripts/deploy.sh
-../potty-word-detector/scripts/deploy.sh
-../potty-word-notification-email-evaluator/scripts/deploy.sh
-../notifier/scripts/deploy.sh
-../redis-chat-message-recorder/scripts/deploy.sh
-../redis-chat-app/scripts/deploy-redis-chat-plus.sh
+./channel-feeder/scripts/deploy.sh
+./potty-word-detector/scripts/deploy.sh ./potty-word-detector
+./potty-word-notification-email-evaluator/scripts/deploy.sh ./potty-word-notification-email-evaluator
+./notifier/scripts/deploy.sh ./notifier
+./redis-chat-message-recorder/scripts/deploy.sh
+./redis-chat-app/scripts/deploy-redis-chat-plus.sh ./redis-chat-app
 
 riff channel create redis-chat-plus-events --cluster-bus gcppubsub
 riff channel create redis-chat-plus-detected-message --cluster-bus gcppubsub
