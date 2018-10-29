@@ -1,12 +1,22 @@
 # Redis Chat Plus Demo
 
-Easy to set up cloud-native architecture demo for PCF. Consists of two apps, greeting-ui and fortune-service, and a database used by fortune-service. Can be used to demo all three services in Spring Cloud Services, container to container networking, and distributed tracing in PCF Metrics.
+Extended demo leveraging kubernetes, Knative, and riff.  This extends the existing redis-chat-app demo, which consists of a node web app accessing redis to provide chat functionality.  The extension adds riff functions to handle back-end services associated with evaulating the messages in the chat for bad words and notifying if found.  It encorporates:
 
-This demo comprises four repos:
-* https://github.com/ciberkleid/cna-demo-setup.git - Set up instructions and deployment scripts
-* https://github.com/ciberkleid/fortune-service.git - Backend service, returns fortunes
-* https://github.com/ciberkleid/greeting-ui.git - Front-end service, displays fortunes
-* https://github.com/ciberkleid/app-config - Config repo
+* mild use of CQRS pattern to submit a command event that updates the data store and allows for parallel processing
+* use of GCP PubSub for Knative bus implementation.  Provides messaging reliability
+* demostrates out of cluster stervice calls
+* multiple subscribers to a single channel
+* node and java functions
+* custom domains
+
+This demo comprises seven repos:
+*  https://github.com/doddatpivotal/channel-feeder.git - Node function to post messages on a channel
+*  https://github.com/doddatpivotal/potty-word-detector.git - Java function to detect potty words
+*  https://github.com/doddatpivotal/potty-word-notification-email-evaluator.git - Java function to determine whether to send email based upon potty word result
+*  https://github.com/doddatpivotal/notifier.git - Java funciton to send emails
+*  https://github.com/doddatpivotal/redis-chat-message-recorder.git - Node function to recorde messages in redis
+*  https://github.com/doddatpivotal/redis-chat-app.git - Base redis chat web app
+*  https://github.com/doddatpivotal/redis-chat-plus-demo-setup.git - Setup instructions
 
 ## prereqs
 
@@ -19,7 +29,9 @@ kubectl get svc knative-ingressgateway --namespace istio-system --output 'jsonpa
 ```
 
 3. Update config for your [custom domain](https://github.com/knative/docs/blob/master/serving/using-a-custom-domain.md)
+
 4. Open up [outbound network access](https://github.com/knative/docs/blob/master/serving/outbound-network-access.md)
+
 5. Setup GCP PubSub Bus
 Run scripts from [Knative Eventing docs](https://github.com/knative/docs/tree/master/eventing) for GCP PubSub
 
