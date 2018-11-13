@@ -9,6 +9,8 @@ Extended demo leveraging kubernetes, Knative, and riff.  This extends the existi
 * node and java functions
 * custom domains
 
+![Redis Chat Plus](redis-chat-plus.png)
+
 This demo comprises seven repos:
 *  https://github.com/doddatpivotal/channel-feeder.git - Node function to post messages on a channel
 *  https://github.com/doddatpivotal/potty-word-detector.git - Java function to detect potty words
@@ -47,6 +49,7 @@ Follow instructions at [notifier repo](https://github.com/doddatpivotal/notifier
 ```bash
 kubectl create configmap redis-chat-web-config --from-literal=FEEDER_URL="http://channel-feeder.default.<CUSTOM_DOMAIN>.com"
 ```
+
 
 ## instructions
 
